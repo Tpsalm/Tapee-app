@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Rewarded Ad Offer Screen</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Material Symbols -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Theme Configuration -->
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec5b",
+                        "primary-dark": "#0ea640",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102216",
+                        "surface-dark": "#162e1e",
+                        "surface-light": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+
+    <!-- Monetag Ad Script - FIXED: Added https:// -->
+    <script src='https://libtl.com/sdk.js' data-zone='10334132' data-sdk='show_10334132'></script>
+
+    <!-- Ad Functions -->
+    <script>
+        // Wait for the ad SDK to load
+        let adLoaded = false;
+        
+        // Check if ad script is loaded
+        function checkAdLoaded() {
+            if (typeof show_10334132 === 'function') {
+                adLoaded = true;
+                console.log('Ad script loaded successfully');
+            } else {
+                console.warn('Ad script not loaded yet, retrying...');
+                setTimeout(checkAdLoaded, 500);
+            }
+        }
+        
+        // Start checking for ad script
+        setTimeout(checkAdLoaded, 1000);
+        
+        function showAd() {
+            if (!adLoaded) {
+                alert('Ad is still loading. Please try again in a moment.');
+                return;
+            }
+            
+            if (typeof show_10334132 !== 'function') {
+                alert('Ad service is not available. Please check your connection.');
+                console.error('show_10334132 is not defined');
+                return;
+            }
+            
+            show_10334132().then(() => {
+                // Reward the user after they watch the ad
+                alert('You have seen an ad!');
+                rewardUser(); // Call your reward function here
+            }).catch((error) => {
+                console.error('Ad failed to load:', error);
+                alert('Failed to load ad. Please try again.');
+            });
+        }
+
+        function rewardUser() {
+            // Add your reward logic here
+            // For example, give the user in-app currency, unlock features, etc.
+            alert('You have been rewarded with 2x points!');
+            
+            // Here you could add logic to update the UI
+            // For example, update the points display from 100 to 200
+            document.querySelectorAll('.text-gray-900.dark\\:text-white, .text-white').forEach(el => {
+                if (el.textContent.includes('100 Pts')) {
+                    el.textContent = '200 Pts';
+                }
+            });
+        }
+    </script>
+
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display antialiased min-h-screen flex flex-col items-center justify-center">
+    
+    <!-- Simple test button outside the mobile container -->
+   
+    
+    <!-- Main Container simulating a mobile view within the larger viewport if on desktop, or full screen on mobile -->
+    <div class="relative flex h-full min-h-screen w-full max-w-md flex-col overflow-hidden bg-background-light dark:bg-background-dark shadow-2xl">
+        <!-- Top App Bar (Simplified for modal feel) -->
+          <div class="fixed top-4 left-4 z-50">
+        
+    </div>
+        <div class="flex items-center px-4 py-4 justify-between relative z-10">
+            <!-- Close button (Secondary exit path) -->
+           
+             <div class="flex gap-[20px]">
+
+             
+            <button onclick="showAd()" style="width: 100px;" class=" relative group cursor-pointer overflow-hidden rounded-xl bg-primary hover:bg-primary-dark transition-all duration-300 h-10 shadow-[0_0_20px_rgba(19,236,91,0.3)] hover:shadow-[0_0_30px_rgba(19,236,91,0.5)] active:scale-[0.98]">
+                   <span class="text-black text-lg font-bold tracking-wide">Watch Ad </span>
+            
+        </button>
+
+
+            <div onclick="showAd()" class="flex items-center cursor-pointer gap-1 px-3 py-1 rounded-full bg-surface-light/50 dark:bg-surface-dark/50 backdrop-blur-sm border border-gray-200 dark:border-white/10">
+                <span class="material-symbols-outlined text-primary text-[20px]">bolt</span>
+                <span class="text-sm font-bold text-gray-900 dark:text-white">Boost Active</span>
+            </div>
+             </div>
+
+             <button onclick="window.history.back()" class="flex items-center justify-center w-10 h-10 rounded-full bg-black/5 dark:bg-white/10 text-gray-900 dark:text-white transition-colors hover:bg-black/10 dark:hover:bg-white/20">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <!-- Scrollable Content Area -->
+        <div class="flex-1 flex flex-col items-center w-full px-6 pt-2 pb-6 overflow-y-auto no-scrollbar">
+            <!-- Hero Image / Graphic -->
+            <div class="w-full relative aspect-square max-h-[280px] mb-6 flex items-center justify-center">
+                <!-- Glowing background effect -->
+                <div class="absolute inset-0 bg-primary/20 rounded-full blur-[60px] scale-75 animate-pulse"></div>
+                <div class="relative w-full h-full rounded-2xl overflow-hidden bg-surface-dark border border-white/10 shadow-xl flex flex-col items-center justify-center bg-gradient-to-br from-[#1a3826] to-background-dark">
+                    <div class="w-full h-full bg-center bg-no-repeat bg-cover opacity-90 scale-110"
+                        data-alt="3D golden coins floating in dark space with neon green lighting"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBULj1bUIUeoMgCRogs60JpEup2ygWF2KfSggt4RlaHiMWFHRZQBQ-yEr2BV9tjYSUReKpYLcLXTVcFXlq1X8e7YYqVRh8OesKsYs7GiQsynKoWScFPRRKV1JUbg9ECOk479ZyLG4rKSOjrf0jr-MbipYbDSqzL6Uz2xflW3VKI3ug3ZMbTppeQeqlbG8S4x_BjGwzmPSqs8hew9dArv8SEC0E14f_LeR_n5t_0WIIlovWGJMPxhGOPLOXhEwFEXLegj3DCsHNbLGqg");'>
+                    </div>
+                    <!-- Overlay badge -->
+                    <div onclick="showAd()" class="absolute cursor-pointer  bg-black/40 backdrop-blur-md border border-primary/30 text-primary px-4 py-1.5 rounded-full text-sm font-bold flex items-center gap-1 shadow-lg">
+                        <span  class="material-symbols-outlined  text-[18px]">timelapse</span>
+                        Limited Time Offer
+                    </div>
+                </div>
+            </div>
+            <!-- Headline -->
+            <h1 class="text-gray-900 dark:text-white text-[32px] font-bold leading-tight text-center mb-2 tracking-tight">
+                Double Your <span class="text-primary">Earnings!</span>
+            </h1>
+            <!-- Body Text -->
+            <p class="text-gray-600 dark:text-gray-400 text-base font-normal leading-relaxed text-center mb-8 max-w-[90%]">
+                Watch a short video to instantly apply a <span class="font-bold text-gray-900 dark:text-white">2x
+                    Multiplier</span> to your current session rewards.
+            </p>
+
+            <!-- Stats Comparison Card -->
+            <div class="w-full bg-white dark:bg-surface-dark border border-gray-200 dark:border-white/5 rounded-xl p-5 mb-8 shadow-sm relative overflow-hidden">
+                <!-- Arrow Icon connecting the two states -->
+                <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 bg-surface-light dark:bg-[#223d2b] p-1.5 rounded-full border border-gray-100 dark:border-white/10 shadow-sm">
+                    <span class="material-symbols-outlined text-gray-400 dark:text-gray-400 text-[20px] rotate-90 sm:rotate-0">arrow_forward</span>
+                </div>
+                <div class="flex flex-row justify-between items-center gap-4 relative z-0">
+                    <!-- Current State -->
+                    <div class="flex-1 flex flex-col items-center gap-1 opacity-60 grayscale">
+                        <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Current</p>
+                        <p class="text-xl font-bold text-gray-900 dark:text-white">100 Pts</p>
+                    </div>
+                    <!-- Future State -->
+                    <div class="flex-1 flex flex-col items-center gap-1 relative">
+                        <!-- Shine effect on the boosted side -->
+                        <div class="absolute -inset-4 bg-primary/5 rounded-lg blur-lg"></div>
+                        <p class="text-xs font-bold text-primary uppercase tracking-wider relative z-10">Boosted</p>
+                        <div class="flex items-center gap-1 relative z-10">
+                            <p class="text-2xl font-bold text-white drop-shadow-[0_0_10px_rgba(19,236,91,0.5)]">200 Pts</p>
+                        </div>
+                        <span class="text-[10px] font-bold bg-primary text-black px-1.5 py-0.5 rounded ml-1 relative z-10">+100%</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Spacer to push buttons to bottom on taller screens -->
+            <div class="flex-1"></div>
+            <!-- Action Buttons -->
+            <div class="w-full flex flex-col gap-3 mt-4">
+                <button onclick="showAd()"
+                    class="w-full relative group cursor-pointer overflow-hidden rounded-xl bg-primary hover:bg-primary-dark transition-all duration-300 h-14 shadow-[0_0_20px_rgba(19,236,91,0.3)] hover:shadow-[0_0_30px_rgba(19,236,91,0.5)] active:scale-[0.98]">
+                    <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                    <div class="relative flex items-center justify-center gap-2 h-full">
+                        <span class="material-symbols-outlined text-black font-bold">play_circle</span>
+                        <span class="text-black text-lg font-bold tracking-wide">Watch Ad (2x Points)</span>
+                    </div>
+                </button>
+                <button onclick="window.history.back()" class="w-full cursor-pointer rounded-xl h-12 bg-transparent hover:bg-black/5 dark:hover:bg-white/5 text-gray-500 dark:text-gray-400 text-sm font-medium transition-colors">
+                    No thanks, I'll stick with 100 pts
+                </button>
+            </div>
+        </div>
+        <!-- Bottom Safe Area Spacer -->
+        <div class="h-4 bg-background-light dark:bg-background-dark"></div>
+    </div>
+</body>
+</html>
